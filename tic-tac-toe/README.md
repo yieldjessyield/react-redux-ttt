@@ -1,3 +1,22 @@
+TTT with AI
+
+Outline:
+
+1)  The TTT game can be played Human vs. Human,  Human vs. A.I.,  A.I. vs. Human (where the A.I. takes the first move)
+2)  The A.I. is completely unbeatable.  It should never lose, and should always win when possible.
+3)  The TTT does not crash.  It has an interface through which it can be played, and I, as a user, should not be able to crash the game.
+
+It can be built in any language with whatever tools you decide.  The UI could be anything from a nice looking iPhone app, to a text console interface.
+Use this as an opportunity to show off your capacity for writing clean code.  Think well named methods & variables, clean spacing, unit tests, and so forth…
+
+Guides:
+
+http://neverstopbuilding.com/minimax
+
+
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
@@ -911,7 +930,7 @@ This feature is experimental and still [has major usage issues](https://github.c
 
 ### Editor Integration
 
-If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates. 
+If you use [Visual Studio Code](https://code.visualstudio.com), there is a [Jest extension](https://github.com/orta/vscode-jest) which works with Create React App out of the box. This provides a lot of IDE-like features while using a text editor: showing the status of a test run with potential fail messages inline, starting and stopping the watcher automatically, and offering one-click snapshot updates.
 
 ![VS Code Jest Preview](https://cloud.githubusercontent.com/assets/49038/20795349/a032308a-b7c8-11e6-9b34-7eeac781003f.png)
 

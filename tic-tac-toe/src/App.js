@@ -3,21 +3,23 @@ import './App.css';
 import Welcome from './components/Welcome'
 import ResetButton from './components/ResetButton'
 import Tile from './components/Tile'
+import {connect} from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      gameBoard: [
-        ' ', ' ', ' ',
-        ' ', ' ', ' ',
-        ' ', ' ', ' '
-      ],
-      turn: "x",
-      winner: null,
-      maxPlayer: 'x',
-      minPlayer: 'o'
-    }
+  //   this.state = {
+  //     gameBoard: [
+  //       ' ', ' ', ' ',
+  //       ' ', ' ', ' ',
+  //       ' ', ' ', ' '
+  //     ],
+  //     turn: "x",
+  //     winner: null,
+  //     maxPlayer: 'x',
+  //     minPlayer: 'o'
+  //   }
   }
 
   resetBoard(){
@@ -69,13 +71,13 @@ class App extends Component {
     var newBoard = this.copyBoard(board)
     if (newBoard[move] === ' '){
       newBoard[move] = player
+      // if move is valid it returns a new board with the new move
+      // on it. UPDATE_BOARD and return the updated board
       return newBoard
     } else {
       return null
     }
   }
-
-  // need to build tie(board)
 
   findAiMove(board){
     var bestMoveScore = 100;
@@ -190,12 +192,14 @@ class App extends Component {
       <div className="container">
         <div className="menu">
           <h2>Welcome to Jess Tic Tac Toe!</h2>
-          < Welcome winner={this.state.winner} />
+          < Welcome />
           < ResetButton reset={this.resetBoard.bind(this)}/>
         </div>
-        {this.state.gameBoard.map(function(value, i){
+        {this.props.gameBoard.map(function(value, i){
           return(
-          < Tile key={i} loc={i} value={value} gameLoop={this.gameLoop.bind(this)} />
+          < Tile key={i} loc={i} value={value} />
+          // took out gameLoop={this.gameLoop.bind(this)}
+          // will move gameloop into an action that's called by tile
             )
         }.bind(this))}
       </div>
@@ -203,4 +207,13 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state){
+  return {gameBoard: state.gameBoard}
+}
+
+// function mapDispatchToProps(dispatch){
+//   return bindActionCreators({ removeSongsState:removeSongsState }, dispatch)
+// }
+
+export default connect(mapStateToProps)(App)
+
