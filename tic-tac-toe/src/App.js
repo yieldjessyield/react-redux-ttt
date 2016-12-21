@@ -5,11 +5,28 @@ import ResetButton from './components/ResetButton'
 import Tile from './components/Tile'
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
+import { resetBoard } from './actions/BoardActions'
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  //   this.state = {
+// don't need this shit (redux lol)
+  // constructor(props) {
+  //   super(props);
+  // //   this.state = {
+  // //     gameBoard: [
+  // //       ' ', ' ', ' ',
+  // //       ' ', ' ', ' ',
+  // //       ' ', ' ', ' '
+  // //     ],
+  // //     turn: "x",
+  // //     winner: null,
+  // //     maxPlayer: 'x',
+  // //     minPlayer: 'o'
+  // //   }
+  // }
+
+// dealt with reset board action
+  // resetBoard(){
+  //   this.setState({
   //     gameBoard: [
   //       ' ', ' ', ' ',
   //       ' ', ' ', ' ',
@@ -19,69 +36,61 @@ class App extends Component {
   //     winner: null,
   //     maxPlayer: 'x',
   //     minPlayer: 'o'
+  //   })
+  // }
+
+// dealt with in winnerTest action
+  // tie(board){
+  //   var moves = board.join('').replace(/ /g, '')
+  //   if(moves.length === 9){
+  //     return true
   //   }
-  }
+  //   return false
+  // }
 
-  resetBoard(){
-    this.setState({
-      gameBoard: [
-        ' ', ' ', ' ',
-        ' ', ' ', ' ',
-        ' ', ' ', ' '
-      ],
-      turn: "x",
-      winner: null,
-      maxPlayer: 'x',
-      minPlayer: 'o'
-    })
-  }
+// Also dealt with in winnerTest action
+  // winner(board, player){
+  //   // debugger
+  //   if(
+  //     (board[0] === player && board[1] === player && board[2] === player)||
+  //     (board[3] === player && board[4] === player && board[5] === player)||
+  //     (board[6] === player && board[7] === player && board[8] === player)||
+  //     (board[0] === player && board[3] === player && board[6] === player)||
+  //     (board[1] === player && board[4] === player && board[7] === player)||
+  //     (board[2] === player && board[5] === player && board[8] === player)||
+  //     (board[0] === player && board[4] === player && board[8] === player)||
+  //     (board[2] === player && board[4] === player && board[6] === player)
+  //     ){
+  //     return true
+  //   } else {
+  //     return null
+  //     // this might be problem
+  //   }
+  // }
 
-  tie(board){
-    var moves = board.join('').replace(/ /g, '')
-    if(moves.length === 9){
-      return true
-    }
-    return false
-  }
+// don't need
+  // copyBoard(board){
+  //   return board.slice(0)
+  // }
 
-  winner(board, player){
-    // debugger
-    if(
-      (board[0] === player && board[1] === player && board[2] === player)||
-      (board[3] === player && board[4] === player && board[5] === player)||
-      (board[6] === player && board[7] === player && board[8] === player)||
-      (board[0] === player && board[3] === player && board[6] === player)||
-      (board[1] === player && board[4] === player && board[7] === player)||
-      (board[2] === player && board[5] === player && board[8] === player)||
-      (board[0] === player && board[4] === player && board[8] === player)||
-      (board[2] === player && board[4] === player && board[6] === player)
-      ){
-      return true
-    } else {
-      return null
-      // this might be problem
-    }
-  }
-
-  copyBoard(board){
-    return board.slice(0)
-  }
-
-  validMove(move, player, board){
-    var newBoard = this.copyBoard(board)
-    if (newBoard[move] === ' '){
-      newBoard[move] = player
-      // if move is valid it returns a new board with the new move
-      // on it. UPDATE_BOARD and return the updated board
-      return newBoard
-    } else {
-      return null
-    }
-  }
+// dealt with this in validMove action and it changes the tempBoard state
+// if you've made a valid move.
+  // validMove(move, player, board){
+  //   var newBoard = this.copyBoard(board)
+  //   if (newBoard[move] === ' '){
+  //     newBoard[move] = player
+  //     // if move is valid it returns a new board with the new move
+  //     // on it
+  //     return newBoard
+  //   } else {
+  //     return null
+  //   }
+  // }
 
   findAiMove(board){
     var bestMoveScore = 100;
     let move = null
+    // this if can use winnerTest action in game, and check state.
     if (this.winner(board, 'x') || this.winner(board, 'o') || this.tie(board)){
       return null
     }
@@ -151,6 +160,7 @@ class App extends Component {
   gameLoop(move){
     let player = this.state.turn
     let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
+
     if(this.winner(currentGameBoard, player)){
       this.setState({
         gameBoard: currentGameBoard,
@@ -187,13 +197,17 @@ class App extends Component {
     })
   }
 
+  onButtonClick(){
+    this.props.resetBoard()
+  }
+
   render() {
     return (
       <div className="container">
         <div className="menu">
           <h2>Welcome to Jess Tic Tac Toe!</h2>
           < Welcome />
-          < ResetButton reset={this.resetBoard.bind(this)}/>
+          <button onClick={this.onButtonClick.bind(this)}>Reset</button>
         </div>
         {this.props.gameBoard.map(function(value, i){
           return(
@@ -211,9 +225,9 @@ function mapStateToProps(state){
   return {gameBoard: state.gameBoard}
 }
 
-// function mapDispatchToProps(dispatch){
-//   return bindActionCreators({ removeSongsState:removeSongsState }, dispatch)
-// }
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({ resetBoard: resetBoard}, dispatch)
+}
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
