@@ -10,9 +10,11 @@ export function validMove(move, player, board){
       // your value has entered the tempBoard to make sure it's valid
       dispatch({type: 'CHANGE_TEMP_BOARD', payload: newBoard}).then
       console.log("move was fucking valid")
+      return true
       }else {
         console.log("did not change temp board")
         dispatch({type: 'CHANGE_TEMP_BOARD', payload: []})
+        return false
       }
   }
 }
@@ -46,13 +48,17 @@ export function winnerTest(currentGameBoard, player){
   }
 }
 
-export function gameLoop(move, player, gameType){
+export function humanGameLoop(move, player, gameType){
     // taking in so many things so it's a purer function
   return function(dispatch, getState){
   debugger
-    // makes sure there is no tie or winners before continuing gameplay
+  }
+}
 
-
+export function robotGameLoop(move, player, gameType){
+    // taking in so many things so it's a purer function
+  return function(dispatch, getState){
+  debugger
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { gameLoop, winnerTest, validMove } from '../actions/GameActions'
+import { humanGameLoop, winnerTest, validMove } from '../actions/GameActions'
 import '../Tile.css'
 
 class Tile extends Component {
@@ -16,26 +16,30 @@ onTileClick(props){
     var value = this.props.value
     // need to define turn in state
     var player = this.props.player[0]
-    this.props.validMove(loc, player, newBoard)
+    let valid = this.props.validMove(loc, player, newBoard)
       debugger
     // setTimeout(() => {
-      if (this.props.tempBoard[loc] === value){
-      debugger
+      if (valid === true){
+        debugger
         newBoard[loc] = player
           // if move is valid it returns a new board with the new move on it
         this.props.winnerTest(newBoard, player)
-          if (this.props.winner === null){
-            this.props.gameLoop(loc, player, gameType)
-          }else {
+          if (this.props.winner === null && gameType === "hvh"){
+            this.props.humanGameLoop(loc, player, gameType)
+          }else if (this.props.winner === null && gameType === "mvh" || gameType === "hvm"){
+            this.props.robotGameLoop(loc, player, gameType)
+          }else if (this.props.winner != null){
           debugger
             // test this alert
-            alert("Someone's already there! Choose another spot wisely...")
+            alert("Game is done! Reset to play again!")
           }
       }else{
-      alert("Please Choose A Game Type!")
+      alert("Someone's already there! Choose another spot wisely...")
       }
     // }, 1000)
 
+  }else{
+    alert("please pick a gametype")
   }
 }
 
@@ -55,7 +59,7 @@ function mapStateToProps(state){
 
 
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({ gameLoop: gameLoop, winnerTest: winnerTest, validMove: validMove }, dispatch)
+  return bindActionCreators({ humanGameLoop: humanGameLoop, winnerTest: winnerTest, validMove: validMove }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tile)
