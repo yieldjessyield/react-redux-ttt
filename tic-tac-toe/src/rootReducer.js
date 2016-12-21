@@ -29,6 +29,7 @@ function reducerBoard(state= [
     //*** need to write something that calls this
     case "UPDATE_BOARD":
       return [...action.payload]
+      debugger
     default:
       return state
   }
@@ -51,6 +52,20 @@ function reducerPlayer(state= ["x"], action){
   }
 }
 
+// might not need this? We'll see
+function reducerRobot(state= false, action){
+  switch (action.type){
+    //*** need to write something that calls this
+    case "ROBOT_TURN":
+      return true
+    //*** need to write something that calls this
+    case "HUMAN_TURN":
+      return false
+    default:
+      return state
+  }
+}
+
 function reducerWinner(state= null, action){
   switch (action.type){
     //*** need to write something that calls this
@@ -63,7 +78,7 @@ function reducerWinner(state= null, action){
   }
 }
 
-function reducerValidMove(state= [], action){
+function reducerTempBoard(state= [], action){
   switch (action.type){
     case "CHANGE_TEMP_BOARD":
       return action.payload
@@ -72,14 +87,27 @@ function reducerValidMove(state= [], action){
   }
 }
 
+function reducerValidMove(state=null, action){
+  switch (action.type){
+    case "CHANGE_VALID_MOVE":
+      return action.payload
+    default:
+      return state
+  }
+}
+
+
 
 const appReducer = combineReducers({
-  gameBoard: reducerBoard, player: reducerPlayer, winner: reducerWinner, gameType: reducerGameType, tempBoard: reducerValidMove
+  gameBoard: reducerBoard, player: reducerPlayer, validMove: reducerValidMove, robotTurn: reducerRobot, winner: reducerWinner, gameType: reducerGameType, tempBoard: reducerTempBoard
 })
-// add in later , maxPlayer: reducerMaxPlayer, minPlayer: reducerMinPlayer
 
 const rootReducer = (state, action) => {
-  return appReducer(state, action)
+  if (action.type === 'NEW_GAME') {
+    state = undefined
+  } else{
+    return appReducer(state, action)
+  }
 }
 
 export default rootReducer

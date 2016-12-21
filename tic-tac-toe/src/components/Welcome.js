@@ -37,7 +37,7 @@ class Welcome extends Component {
 }
 
 function mapStateToProps(state){
-  return {gameBoard: state.gameBoard, gameType: state.gameType}
+  return {gameBoard: state.gameBoard, gameType: state.gameType, winner: state.winner}
 }
 
 function mapDispatchToProps(dispatch){

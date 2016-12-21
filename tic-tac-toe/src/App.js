@@ -205,7 +205,7 @@ class App extends Component {
     return (
       <div className="container">
         <div className="menu">
-          <h2>Welcome to Jess Tic Tac Toe!</h2>
+          <h2>Welcome to Jess Tac Toe!</h2>
           < Welcome />
           <button onClick={this.onButtonClick.bind(this)}>Reset</button>
         </div>

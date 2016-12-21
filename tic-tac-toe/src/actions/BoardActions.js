@@ -8,7 +8,9 @@ export function resetBoard(){
         ' ', ' ', ' '
       ]
       let gameType = []
+
     dispatch({type: 'RESET_BOARD', payload: newBoard })
+    dispatch({type: 'NEW_GAME', payload: newBoard })
     dispatch({type: 'CHOOSE_GAME_TYPE', payload: gameType })
   }
 }
