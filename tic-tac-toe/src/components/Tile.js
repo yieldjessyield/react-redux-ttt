@@ -4,7 +4,17 @@ import '../Tile.css'
 export default class Tile extends Component {
 
 tileClick(props){
-  props.gameLoop(props.loc, props.turn)
+  if (props.gameType === 'hvh'){
+    props.hvhGameLoop(props.loc)
+  }
+  else if (props.gameType === 'hvm'){
+    props.hvmGameLoop(props.loc)
+  }
+  else if (props.gameType === 'mvh'){
+    console.log("build Machine First Game")
+  } else {
+    alert("Please Pick A Game Type!")
+  }
 }
 
 render(){

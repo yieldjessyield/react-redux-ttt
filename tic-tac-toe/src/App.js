@@ -18,8 +18,10 @@ class App extends Component {
       winner: null,
       maxPlayer: 'x',
       minPlayer: 'o',
-      gameType: 'none'
+      gameType: null
     }
+
+    // this.setGameType.bind(this)
   }
 
   resetBoard(){
@@ -32,13 +34,16 @@ class App extends Component {
       turn: "x",
       winner: null,
       maxPlayer: 'x',
-      minPlayer: 'o'
+      minPlayer: 'o',
+      gameType: null
     })
   }
 
-  setGameType(newGameType){
+  setGameType(event){
+    event.preventDefault()
+    debugger
     this.setState({
-      gameType: newGameType
+      gameType: event.target.id
     })
   }
 
@@ -154,7 +159,7 @@ class App extends Component {
     }
   }
 
-  gameLoop(move){
+  hvmGameLoop(move){
     let player = this.state.turn
     let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
     if(this.winner(currentGameBoard, player)){
@@ -167,7 +172,7 @@ class App extends Component {
     if(this.tie(currentGameBoard)){
       this.setState({
         gameBoard: currentGameBoard,
-        winner: 'd'
+        winner: 'Cat!'
       })
       return
 
@@ -193,6 +198,36 @@ class App extends Component {
     })
   }
 
+  hvhGameLoop(move){
+    let player = this.state.turn
+    let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
+    if(this.winner(currentGameBoard, player)){
+      this.setState({
+        gameBoard: currentGameBoard,
+        winner: player
+      })
+      return
+    }
+    if(this.tie(currentGameBoard)){
+      this.setState({
+        gameBoard: currentGameBoard,
+        winner: 'Cat!'
+      })
+      return
+
+    }
+    var nextPlayer = ""
+    if(player === "x"){
+      nextPlayer = "o"
+    } else {
+      nextPlayer = "x"
+    }
+    this.setState({
+      gameBoard: currentGameBoard,
+      turn: nextPlayer
+    })
+  }
+
 
 
   render() {
@@ -200,13 +235,13 @@ class App extends Component {
       <div className="container">
         <div className="menu">
           <h2>Welcome to Jess Tic Tac Toe!</h2>
-          < Welcome winner={this.state.winner} gameType={this.state.gameType} setGameType={this.setGameType.bind(this)} />
-          // < GameButtons setGameType={this.setGameType.bind(this)}/>
+          < Welcome winner={this.state.winner} />
+          < GameButtons gameType={this.state.gameType} setGameType={this.setGameType.bind(this)} />
           < ResetButton reset={this.resetBoard.bind(this)}/>
         </div>
         {this.state.gameBoard.map(function(value, i){
           return(
-          < Tile key={i} loc={i} value={value} gameLoop={this.gameLoop.bind(this)} />
+          < Tile key={i} loc={i} value={value} gameType={this.state.gameType} hvmGameLoop={this.hvmGameLoop.bind(this)} hvhGameLoop={this.hvhGameLoop.bind(this)} />
             )
         }.bind(this))}
       </div>
