@@ -90,7 +90,7 @@ class App extends Component {
   findAiMove(board){
     var bestMoveScore = 100;
     let move = null
-    // this if can use winnerTest action in game, and check state.
+    // already checked this before we went in
     if (this.winner(board, 'x') || this.winner(board, 'o') || this.tie(board)){
       return null
     }
