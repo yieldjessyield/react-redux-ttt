@@ -3,6 +3,7 @@ import './App.css';
 import Welcome from './components/Welcome'
 import ResetButton from './components/ResetButton'
 import Tile from './components/Tile'
+import GameButtons from './components/GameButtons'
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +17,8 @@ class App extends Component {
       turn: "x",
       winner: null,
       maxPlayer: 'x',
-      minPlayer: 'o'
+      minPlayer: 'o',
+      gameType: 'none'
     }
   }
 
@@ -31,6 +33,12 @@ class App extends Component {
       winner: null,
       maxPlayer: 'x',
       minPlayer: 'o'
+    })
+  }
+
+  setGameType(newGameType){
+    this.setState({
+      gameType: newGameType
     })
   }
 
@@ -185,12 +193,15 @@ class App extends Component {
     })
   }
 
+
+
   render() {
     return (
       <div className="container">
         <div className="menu">
           <h2>Welcome to Jess Tic Tac Toe!</h2>
-          < Welcome winner={this.state.winner} />
+          < Welcome winner={this.state.winner} gameType={this.state.gameType} setGameType={this.setGameType.bind(this)} />
+          // < GameButtons setGameType={this.setGameType.bind(this)}/>
           < ResetButton reset={this.resetBoard.bind(this)}/>
         </div>
         {this.state.gameBoard.map(function(value, i){
