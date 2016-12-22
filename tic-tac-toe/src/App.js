@@ -98,6 +98,7 @@ class App extends Component {
       let newBoard = this.validMove(i, this.state.minPlayer, board)
       if(newBoard){
         var moveScore = this.maxScore(newBoard)
+        // this is going to be in maxScore(whats below)
         if (moveScore < bestMoveScore){
           bestMoveScore = moveScore
           move = i;
@@ -120,6 +121,7 @@ class App extends Component {
       // is and does the same thing?
       var bestMoveValue = 100
       for(var i = 0; i < board.length; i++){
+                     // can replace validMove with newBoard[move] === ' '
         let newBoard = this.validMove(i, this.state.minPlayer, board)
       if(newBoard){
         var predictedMoveValue = this.maxScore(newBoard)
@@ -145,6 +147,7 @@ class App extends Component {
       // is and does the same thing?
       var bestMoveValue = -100
       for(var i = 0; i < board.length; i++){
+                      // can replace validMove with newBoard[move] === ' '
         let newBoard = this.validMove(i, this.state.maxPlayer, board)
       if(newBoard){
         var predictedMoveValue = this.minScore(newBoard)

@@ -32,12 +32,12 @@ export function winnerTest(move, player, board, gameType){
     var currentGameBoard = board.slice(0)
     var moves = currentGameBoard.join('').replace(/ /g, '')
 
-    var otherPlayer = ""
-    if (player === "x"){
-      otherPlayer = "o"
-    } else {
-      otherPlayer = "x"
-    }
+    // var otherPlayer = ""
+    // if (player === "x"){
+    //   otherPlayer = "o"
+    // } else {
+    //   otherPlayer = "x"
+    // }
 
     if(
       (currentGameBoard[0] === player && currentGameBoard[1] === player && currentGameBoard[2] === player)||
@@ -49,26 +49,34 @@ export function winnerTest(move, player, board, gameType){
       (currentGameBoard[0] === player && currentGameBoard[4] === player && currentGameBoard[8] === player)||
       (currentGameBoard[2] === player && currentGameBoard[4] === player && currentGameBoard[6] === player)
       ){
-      // make sure this works
-      winner = player
-      dispatch({type: 'DECLARE_WINNER', payload: player})
-      dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
-      }
-    else if (
-      (currentGameBoard[0] === otherPlayer && currentGameBoard[1] === otherPlayer && currentGameBoard[2] === otherPlayer)||
-      (currentGameBoard[3] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[5] === otherPlayer)||
-      (currentGameBoard[6] === otherPlayer && currentGameBoard[7] === otherPlayer && currentGameBoard[8] === otherPlayer)||
-      (currentGameBoard[0] === otherPlayer && currentGameBoard[3] === otherPlayer && currentGameBoard[6] === otherPlayer)||
-      (currentGameBoard[1] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[7] === otherPlayer)||
-      (currentGameBoard[2] === otherPlayer && currentGameBoard[5] === otherPlayer && currentGameBoard[8] === otherPlayer)||
-      (currentGameBoard[0] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[8] === otherPlayer)||
-      (currentGameBoard[2] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[6] === otherPlayer)
-      ){
-      // make sure this works
-      winner = player
-      dispatch({type: 'DECLARE_WINNER', payload: player})
-      dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
-      }
+          // make sure this works
+        if (getState().robotTurn === false){
+          winner = player
+          dispatch({type: 'DECLARE_WINNER', payload: player})
+          dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
+        }else if (getState().robotTurn === true && getState().searchId === "aifinder"){
+          // dispatch(maxScore(currentGameBoard))
+        }else if (getState().robotTurn === true && getState().searchId === "maxfinder"){
+          // change state of move score = 10
+        }else if (getState().robotTurn === true && getState().searchId === "minfinder"){
+          // change state of predicted move value = 10
+        }
+    }
+    // else if (
+    //   (currentGameBoard[0] === otherPlayer && currentGameBoard[1] === otherPlayer && currentGameBoard[2] === otherPlayer)||
+    //   (currentGameBoard[3] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[5] === otherPlayer)||
+    //   (currentGameBoard[6] === otherPlayer && currentGameBoard[7] === otherPlayer && currentGameBoard[8] === otherPlayer)||
+    //   (currentGameBoard[0] === otherPlayer && currentGameBoard[3] === otherPlayer && currentGameBoard[6] === otherPlayer)||
+    //   (currentGameBoard[1] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[7] === otherPlayer)||
+    //   (currentGameBoard[2] === otherPlayer && currentGameBoard[5] === otherPlayer && currentGameBoard[8] === otherPlayer)||
+    //   (currentGameBoard[0] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[8] === otherPlayer)||
+    //   (currentGameBoard[2] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[6] === otherPlayer)
+    //   ){
+    //   // make sure this works
+    //   winner = player
+    //   dispatch({type: 'DECLARE_WINNER', payload: player})
+    //   dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
+    //   }
 
     else if (moves.length === 9 && winner === ""){
       winner = "cat"
@@ -94,6 +102,7 @@ export function winnerTest(move, player, board, gameType){
 
 export function humanGameLoop(move, player, board, gameType){
   return function(dispatch){
+
     var loc = move
     var currentPlayer = player
     // var gameTypes = gameType

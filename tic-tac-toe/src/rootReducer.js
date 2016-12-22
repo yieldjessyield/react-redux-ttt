@@ -96,10 +96,20 @@ function reducerValidMove(state=null, action){
   }
 }
 
+function reducerSearchId(state="finder", action){
+  switch (action.type){
+    case "SWITCH_TO_AI_FINDER":
+      return action.payload
+    case "SWITCH_TO_FINDER":
+      return action.payload
+    default:
+      return state
+  }
+}
 
 
 const appReducer = combineReducers({
-  gameBoard: reducerBoard, player: reducerPlayer, validMove: reducerValidMove, robotTurn: reducerRobot, winner: reducerWinner, gameType: reducerGameType, tempBoard: reducerTempBoard
+  gameBoard: reducerBoard, player: reducerPlayer, validMove: reducerValidMove, robotTurn: reducerRobot, winner: reducerWinner, gameType: reducerGameType, tempBoard: reducerTempBoard, searchId: reducerSearchId
 })
 
 const rootReducer = (state, action) => {
