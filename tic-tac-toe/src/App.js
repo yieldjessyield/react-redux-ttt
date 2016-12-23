@@ -21,7 +21,6 @@ class App extends Component {
       gameType: null
     }
 
-    // this.setGameType.bind(this)
   }
 
   resetBoard(){
@@ -41,10 +40,20 @@ class App extends Component {
 
   setGameType(event){
     event.preventDefault()
-    debugger
-    this.setState({
+      if (event.target.id === "mvh"){
+        this.setState({
+      gameBoard: [
+        ' ', ' ', ' ',
+        ' ', 'o', ' ',
+        ' ', ' ', ' '
+      ],
       gameType: event.target.id
     })
+      } else {
+        this.setState({
+          gameType: event.target.id
+        })
+      }
   }
 
   tie(board){
@@ -88,8 +97,6 @@ class App extends Component {
     }
   }
 
-  // need to build tie(board)
-
   findAiMove(board){
     var bestMoveScore = 100;
     let move = null
@@ -107,31 +114,6 @@ class App extends Component {
       }
     }
     return move
-  }
-
-  minScore(board){
-    if(this.winner(board, 'x')){
-      return 10
-    } else if (this.winner(board, 'o')){
-      return -10
-    } else if (this.tie(board)){
-      return 0
-    } else {
-      // possibly refactor?
-      // make minimising maximising function, takes in which player it
-      // is and does the same thing?
-      var bestMoveValue = 100
-      for(var i = 0; i < board.length; i++){
-        let newBoard = this.validMove(i, this.state.minPlayer, board)
-      if(newBoard){
-        var predictedMoveValue = this.maxScore(newBoard)
-        if (predictedMoveValue < bestMoveValue){
-          bestMoveValue = predictedMoveValue
-          }
-        }
-      }
-      return bestMoveValue
-    }
   }
 
   maxScore(board){
@@ -159,6 +141,61 @@ class App extends Component {
     }
   }
 
+  minScore(board){
+    if(this.winner(board, 'x')){
+      return 10
+    } else if (this.winner(board, 'o')){
+      return -10
+    } else if (this.tie(board)){
+      return 0
+    } else {
+      // possibly refactor?
+      // make minimising maximising function, takes in which player it
+      // is and does the same thing?
+      var bestMoveValue = 100
+      for(var i = 0; i < board.length; i++){
+        let newBoard = this.validMove(i, this.state.minPlayer, board)
+      if(newBoard){
+        var predictedMoveValue = this.maxScore(newBoard)
+        if (predictedMoveValue < bestMoveValue){
+          bestMoveValue = predictedMoveValue
+          }
+        }
+      }
+      return bestMoveValue
+    }
+  }
+
+  hvhGameLoop(move){
+    let player = this.state.turn
+    let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
+    if(this.winner(currentGameBoard, player)){
+      this.setState({
+        gameBoard: currentGameBoard,
+        winner: player
+      })
+      return
+    }
+    if(this.tie(currentGameBoard)){
+      this.setState({
+        gameBoard: currentGameBoard,
+        winner: 'CAT'
+      })
+      return
+
+    }
+    var nextPlayer = ""
+    if(player === "x"){
+      nextPlayer = "o"
+    } else {
+      nextPlayer = "x"
+    }
+    this.setState({
+      gameBoard: currentGameBoard,
+      turn: nextPlayer
+    })
+  }
+
   hvmGameLoop(move){
     let player = this.state.turn
     let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
@@ -172,7 +209,7 @@ class App extends Component {
     if(this.tie(currentGameBoard)){
       this.setState({
         gameBoard: currentGameBoard,
-        winner: 'Cat!'
+        winner: 'CAT'
       })
       return
 
@@ -198,7 +235,8 @@ class App extends Component {
     })
   }
 
-  hvhGameLoop(move){
+
+  mvhGameLoop(move){
     let player = this.state.turn
     let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
     if(this.winner(currentGameBoard, player)){
@@ -211,20 +249,29 @@ class App extends Component {
     if(this.tie(currentGameBoard)){
       this.setState({
         gameBoard: currentGameBoard,
-        winner: 'Cat!'
+        winner: 'CAT'
       })
       return
 
     }
-    var nextPlayer = ""
-    if(player === "x"){
-      nextPlayer = "o"
-    } else {
-      nextPlayer = "x"
+    player = 'o'
+    currentGameBoard = this.validMove(this.findAiMove(currentGameBoard), player, currentGameBoard)
+    if(this.winner(currentGameBoard, player)){
+      this.setState({
+        gameBoard: currentGameBoard,
+        winner: player
+      })
+      return
+    }
+    if(this.tie(currentGameBoard)){
+      this.setState({
+        gameBoard: currentGameBoard,
+        winner: 'CAT'
+      })
+      return
     }
     this.setState({
-      gameBoard: currentGameBoard,
-      turn: nextPlayer
+      gameBoard: currentGameBoard
     })
   }
 
@@ -234,14 +281,14 @@ class App extends Component {
     return (
       <div className="container">
         <div className="menu">
-          <h2>Welcome to Jess Tic Tac Toe!</h2>
+          <h2 id="title">Welcome to Jess Tic Tac Toe!</h2>
           < Welcome winner={this.state.winner} />
           < GameButtons gameType={this.state.gameType} setGameType={this.setGameType.bind(this)} />
           < ResetButton reset={this.resetBoard.bind(this)}/>
         </div>
         {this.state.gameBoard.map(function(value, i){
           return(
-          < Tile key={i} loc={i} value={value} gameType={this.state.gameType} hvmGameLoop={this.hvmGameLoop.bind(this)} hvhGameLoop={this.hvhGameLoop.bind(this)} />
+          < Tile key={i} loc={i} value={value} gameType={this.state.gameType} hvmGameLoop={this.hvmGameLoop.bind(this)} hvhGameLoop={this.hvhGameLoop.bind(this)} mvhGameLoop={this.mvhGameLoop.bind(this)}/>
             )
         }.bind(this))}
       </div>

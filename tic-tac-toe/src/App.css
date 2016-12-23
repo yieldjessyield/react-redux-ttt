@@ -14,6 +14,12 @@ button {
   margin: 0 auto;
 }
 
+#title{
+  font-size: 47px;
+  font-family: "Bitter",serif;
+  color: #6496c8;
+}
+
 /*.App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

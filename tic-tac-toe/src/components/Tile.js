@@ -11,7 +11,7 @@ tileClick(props){
     props.hvmGameLoop(props.loc)
   }
   else if (props.gameType === 'mvh'){
-    console.log("build Machine First Game")
+    props.mvhGameLoop(props.loc)
   } else {
     alert("Please Pick A Game Type!")
   }

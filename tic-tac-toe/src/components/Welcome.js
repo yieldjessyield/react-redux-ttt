@@ -10,10 +10,3 @@ render(){
     )
   }
 }
-
-    // <div>
-    //   <div className={this.props.gameType ? 'hidden' : 'visible`'}>
-    //     <button onClick={this.props.setGameType("hvh")}>Human Vs. Human</button>
-    //     <button onClick={this.props.setGameType("hvm")}>Human Vs. Machine</button>
-    //     <button onClick={this.props.setGameType("mvh")}>Machine Vs. Human</button>
-    //   </div>
