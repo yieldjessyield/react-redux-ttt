@@ -5,6 +5,7 @@ import ResetButton from './components/ResetButton'
 import Tile from './components/Tile'
 import GameButtons from './components/GameButtons'
 
+
 class App extends Component {
   constructor(props) {
     super(props);
