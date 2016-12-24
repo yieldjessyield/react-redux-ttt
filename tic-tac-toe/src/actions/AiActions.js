@@ -23,6 +23,16 @@ export function findAiMove(board){
     // }, function(win) {
     //   console.log("ur a loser")
     // })
+    function aiValidMove(move, player, board){
+      var newBoard = board.slice(0)
+        debugger
+      if (newBoard[move] === ''){
+        newBoard[move] = player
+        return newBoard
+      } else {
+        return null
+      }
+    }
     var player = getState().player
     var otherPlayer = ""
     if (player === "x"){
@@ -34,7 +44,7 @@ export function findAiMove(board){
     // start iterating though board and check if various moves are valid
     for (var i = 0; i < board.length; i++){
       // if a move is valid we send it to get a score
-      let fancyBoard = dispatch(aiValidMove(i, otherPlayer, newBoard))
+      let fancyBoard = aiValidMove(i, otherPlayer, newBoard)
         debugger
       var fancyBoardPromise = new Promise(function(fulfill, reject){
         if (fancyBoard){
@@ -129,18 +139,18 @@ export function aiWinnerTest(board, thePlayer){
   }
 }
 
-export function aiValidMove(move, player, board){
-  return function(dispatch){
-    var newBoard = board.slice(0)
-      debugger
-    if (newBoard[move] === ''){
-      newBoard[move] = player
-      return newBoard
-    } else {
-      return null
-    }
-  }
-}
+// export function aiValidMove(move, player, board){
+//   return function(dispatch){
+//     var newBoard = board.slice(0)
+//       debugger
+//     if (newBoard[move] === ''){
+//       newBoard[move] = player
+//       return newBoard
+//     } else {
+//       return null
+//     }
+//   }
+// }
 
 
 
