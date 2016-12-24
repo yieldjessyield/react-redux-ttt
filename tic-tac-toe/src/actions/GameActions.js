@@ -14,7 +14,7 @@ export function validMove(move, player, board, gameType){
       // dispatch({type: 'CHANGE_VALID_MOVE', payload: move})
       dispatch(winnerTest(move, player, newBoard, gameType))
 
-      console.log("move was fucking valid")
+      console.log("move was valid")
       // return true
       }else {
         let error = "Someone's already there! Choose another spot wisely..."
@@ -69,21 +69,6 @@ export function winnerTest(move, player, board, gameType){
           // change state of predicted move value = 10
         }
     }
-    // else if (
-    //   (currentGameBoard[0] === otherPlayer && currentGameBoard[1] === otherPlayer && currentGameBoard[2] === otherPlayer)||
-    //   (currentGameBoard[3] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[5] === otherPlayer)||
-    //   (currentGameBoard[6] === otherPlayer && currentGameBoard[7] === otherPlayer && currentGameBoard[8] === otherPlayer)||
-    //   (currentGameBoard[0] === otherPlayer && currentGameBoard[3] === otherPlayer && currentGameBoard[6] === otherPlayer)||
-    //   (currentGameBoard[1] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[7] === otherPlayer)||
-    //   (currentGameBoard[2] === otherPlayer && currentGameBoard[5] === otherPlayer && currentGameBoard[8] === otherPlayer)||
-    //   (currentGameBoard[0] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[8] === otherPlayer)||
-    //   (currentGameBoard[2] === otherPlayer && currentGameBoard[4] === otherPlayer && currentGameBoard[6] === otherPlayer)
-    //   ){
-    //   // make sure this works
-    //   winner = player
-    //   dispatch({type: 'DECLARE_WINNER', payload: player})
-    //   dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
-    //   }
 
     else if (moves.length === 9 && winner === ""){
       winner = "cat"

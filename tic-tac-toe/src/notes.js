@@ -1,3 +1,64 @@
+
+// old winner function playing with promises
+
+// let aiPlayer = getState().player
+
+    // var isThereAWinner = new Promise(function(fulfill, reject){
+    //   var isAWinner = dispatch(aiWinnerTest(board))
+    //   if (isAWinner === true || isAWinner === false){
+    //     fulfill(isAWinner)
+    //   } else {
+    //     reject(isAWinner)
+    //   }
+    // })
+
+    // isThereAWinner.then(function(win){
+    //   console.log("There Wa A winner")
+    // }, function(win) {
+    //   console.log("ur a loser")
+    // })
+
+
+
+// more promise play
+
+
+
+// debugger
+  //     let fancyBoard = []
+  //     if(fancyBoard){
+  //       var moveScorePromise = new Promise(function(fulfill, reject){
+  //         moveScore = dispatch(maxScore(fancyBoard))
+  //         if (moveScore < bestMoveScore){
+  //           fulfill(moveScore)
+  //         } else {
+  //           reject(moveScore)
+  //         }
+  //       })
+  //     }
+
+  //     moveScorePromise.then(function(win){
+  //       bestMoveScore = moveScore
+  //       move = i;
+  //       }, function(win) {
+  //         console.log("Nothin going on here folks")
+  //       })
+  //         //create a temp board with "minPlayer" (user's token)
+  //         // dispatch(otherWinnerTest(tempBoard))
+  //       debugger
+  //       // dispatch(winnerTest(200, player, board, gameType))
+  //       //send temp board to winner to check then
+  //         // dispatch(maxScore(tempBoard))
+  // //check what move is here
+  // console.log(move)
+  // debugger
+
+
+
+
+
+
+
 // // old update board function
 
 // updateBoard(loc, player){
@@ -67,3 +128,34 @@
 //     this.setState({turn: (this.state.turn === 'x') ? 'o' : 'x'})
 //   }
 
+
+// old find "other winner" function, unessecary
+
+// debugger
+  //     let fancyBoard = []
+  //     if(fancyBoard){
+  //       var moveScorePromise = new Promise(function(fulfill, reject){
+  //         moveScore = dispatch(maxScore(fancyBoard))
+  //         if (moveScore < bestMoveScore){
+  //           fulfill(moveScore)
+  //         } else {
+  //           reject(moveScore)
+  //         }
+  //       })
+  //     }
+
+  //     moveScorePromise.then(function(win){
+  //       bestMoveScore = moveScore
+  //       move = i;
+  //       }, function(win) {
+  //         console.log("Nothin going on here folks")
+  //       })
+  //         //create a temp board with "minPlayer" (user's token)
+  //         // dispatch(otherWinnerTest(tempBoard))
+  //       debugger
+  //       // dispatch(winnerTest(200, player, board, gameType))
+  //       //send temp board to winner to check then
+  //         // dispatch(maxScore(tempBoard))
+  // //check what move is here
+  // console.log(move)
+  // debugger

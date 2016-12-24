@@ -7,22 +7,6 @@ export function findAiMove(board){
     var moveScore = 0
     // already checked for winners or ties before this is triggered so
     // no need here
-    // let aiPlayer = getState().player
-
-    // var isThereAWinner = new Promise(function(fulfill, reject){
-    //   var isAWinner = dispatch(aiWinnerTest(board))
-    //   if (isAWinner === true || isAWinner === false){
-    //     fulfill(isAWinner)
-    //   } else {
-    //     reject(isAWinner)
-    //   }
-    // })
-
-    // isThereAWinner.then(function(win){
-    //   console.log("There Wa A winner")
-    // }, function(win) {
-    //   console.log("ur a loser")
-    // })
     function aiValidMove(move, player, board){
       var newBoard = board.slice(0)
         debugger
@@ -60,34 +44,7 @@ export function findAiMove(board){
     }, function(yes){
       console.log("blerg")
     })
-  // debugger
-  //     let fancyBoard = []
-  //     if(fancyBoard){
-  //       var moveScorePromise = new Promise(function(fulfill, reject){
-  //         moveScore = dispatch(maxScore(fancyBoard))
-  //         if (moveScore < bestMoveScore){
-  //           fulfill(moveScore)
-  //         } else {
-  //           reject(moveScore)
-  //         }
-  //       })
-  //     }
 
-  //     moveScorePromise.then(function(win){
-  //       bestMoveScore = moveScore
-  //       move = i;
-  //       }, function(win) {
-  //         console.log("Nothin going on here folks")
-  //       })
-  //         //create a temp board with "minPlayer" (user's token)
-  //         // dispatch(otherWinnerTest(tempBoard))
-  //       debugger
-  //       // dispatch(winnerTest(200, player, board, gameType))
-  //       //send temp board to winner to check then
-  //         // dispatch(maxScore(tempBoard))
-  // //check what move is here
-  // console.log(move)
-  // debugger
     }
   }
 

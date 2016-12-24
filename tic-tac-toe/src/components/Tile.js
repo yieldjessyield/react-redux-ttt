@@ -17,8 +17,11 @@ onTileClick(props){
       // need to define turn in state
       var player = this.props.player[0]
       if (this.props.robotTurn === false){
+        // kick off turn here no matter what
         let not_valid = this.props.validMove(loc, player, newBoard, gameType)
+          // debugger
           if (typeof not_valid === 'string'){
+            // this works in Hvh
             alert(not_valid)
           } else if (this.props.winner){
             alert("There's already a winner! Click reset to play again.")
