@@ -27,7 +27,7 @@ Test Info:
 
 
 
-
+*** Ignore this unless interested in using create-react-app***
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 

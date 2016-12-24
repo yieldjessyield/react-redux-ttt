@@ -10,11 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gameBoard: [
-        ' ', ' ', ' ',
-        ' ', ' ', ' ',
-        ' ', ' ', ' '
-      ],
+      gameBoard: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       turn: "x",
       winner: null,
       maxPlayer: 'x',
@@ -26,11 +22,7 @@ class App extends Component {
 
   resetBoard(){
     this.setState({
-      gameBoard: [
-        ' ', ' ', ' ',
-        ' ', ' ', ' ',
-        ' ', ' ', ' '
-      ],
+      gameBoard: [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
       turn: "x",
       winner: null,
       maxPlayer: 'x',
@@ -43,11 +35,7 @@ class App extends Component {
     event.preventDefault()
       if (event.target.id === "mvh"){
         this.setState({
-      gameBoard: [
-        ' ', ' ', ' ',
-        ' ', 'o', ' ',
-        ' ', ' ', ' '
-      ],
+      gameBoard: [' ', ' ', ' ', ' ', 'o', ' ', ' ', ' ', ' '],
       gameType: event.target.id
     })
       } else {
@@ -128,6 +116,7 @@ class App extends Component {
       // possibly refactor?
       // make minimising maximising function, takes in which player it
       // is and does the same thing?
+      // Could use recursion
       var bestMoveValue = -100
       for(var i = 0; i < board.length; i++){
         let newBoard = this.validMove(i, this.state.maxPlayer, board)
@@ -153,6 +142,7 @@ class App extends Component {
       // possibly refactor?
       // make minimising maximising function, takes in which player it
       // is and does the same thing?
+      // Could use recursion
       var bestMoveValue = 100
       for(var i = 0; i < board.length; i++){
         let newBoard = this.validMove(i, this.state.minPlayer, board)
@@ -197,6 +187,7 @@ class App extends Component {
     })
   }
 
+  // Human Vs. Human Game Loop
   hvmGameLoop(move){
     let player = this.state.turn
     let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
@@ -236,7 +227,8 @@ class App extends Component {
     })
   }
 
-
+  // Machine Vs. Human Game Loop
+  // also used by Human Vs. Machine
   mvhGameLoop(move){
     let player = this.state.turn
     let currentGameBoard = this.validMove(move, player, this.state.gameBoard)
