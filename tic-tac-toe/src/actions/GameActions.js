@@ -1,7 +1,7 @@
 import { findAiMove } from './AiActions'
 
 
-export function validMove(move, player, board, gameType){
+export function validMove(move, player, board){
   return function(dispatch){
     var newBoard = board.slice(0)
     if (newBoard[move] === ' '){
@@ -12,7 +12,7 @@ export function validMove(move, player, board, gameType){
       // your value has entered the tempBoard to make sure it's valid
       // dispatch({type: 'UPDATE_BOARD', payload: newBoard})
       // dispatch({type: 'CHANGE_VALID_MOVE', payload: move})
-      dispatch(winnerTest(move, player, newBoard, gameType))
+      dispatch(winnerTest(player, newBoard))
 
       console.log("move was valid")
       // return true
@@ -26,19 +26,22 @@ export function validMove(move, player, board, gameType){
   }
 }
 
-export function winnerTest(move, player, board, gameType){
+export function winnerTest(player, board){
   return function(dispatch, getState){
     var winner = ""
     var currentGameBoard = board.slice(0)
     var moves = currentGameBoard.join('').replace(/ /g, '')
-
+    var currentGameType = getState().gameType
     var otherPlayer = ""
+    var roboTurn = getState().robotTurn
+
     if (player === "x"){
       otherPlayer = "o"
     } else {
       otherPlayer = "x"
     }
 
+    // if there is a winner do what's below
     if(
       (currentGameBoard[0] === player && currentGameBoard[1] === player && currentGameBoard[2] === player)||
       (currentGameBoard[3] === player && currentGameBoard[4] === player && currentGameBoard[5] === player)||
@@ -49,69 +52,48 @@ export function winnerTest(move, player, board, gameType){
       (currentGameBoard[0] === player && currentGameBoard[4] === player && currentGameBoard[8] === player)||
       (currentGameBoard[2] === player && currentGameBoard[4] === player && currentGameBoard[6] === player)
       ){
-          // make sure this works
-        if (getState().robotTurn === false){
           winner = player
           dispatch({type: 'DECLARE_WINNER', payload: player})
           dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
-        }
-        else if (getState().robotTurn === true && move === 200){
-          // not sure if this is needed...
-          dispatch({type: 'DECLARE_WINNER', payload: player})
-          dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
-        }
-        else if (getState().robotTurn === true && move === 100){
-          // maxfinder is using this
-          // change state of move score = 10
-        }
-        else if (getState().robotTurn === true && move === -100){
-          // minfinder is using this
-          // change state of predicted move value = 10
-        }
     }
-
+    // if there is a tie do what's below
     else if (moves.length === 9 && winner === ""){
       winner = "cat"
       // make sure this works with AI
       dispatch({type: 'DECLARE_WINNER', payload: winner})
       dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
     }
+    // else let human or computer decide move
     else {
-      if (gameType === "hvh"){
-        dispatch(humanGameLoop(move, player, currentGameBoard, gameType))
+      if (currentGameType === "hvh"){
+        dispatch(humanGameLoop(player, currentGameBoard, currentGameType))
         console.log("there is no winner yet, let ur friend go.")
       }
-      else if (gameType === "mvh" || gameType === "hvm"){
-        if(getState().searchId === "aifinder"){
-          // dispatch(maxScore(currentGameBoard))
+      else if (currentGameType != "hvh" && roboTurn === false){
+        debugger
+        //check state here, maybe dispatch a update board? with humo moveo
+        dispatch({type: 'ROBOT_TURN', payload: true})
+        dispatch({type: 'CHANGE_PLAYER', payload: otherPlayer})
+        dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
+        dispatch(findAiMove(board))
+        // dispatch(robotGameLoop(move, player, currentGameBoard, gameType))
+        console.log("there is no winner yet, call the bots")
         }
-        else if(move === 100){
-          // dispatch(minScore(currentGameBoard))
-          //maybe dispatch a value here for pmvForMax state
+      else if (currentGameType != "hvh" && roboTurn === true){
+        debugger
+        dispatch({type: 'HUMAN_TURN', payload: false})
+        dispatch({type: 'CHANGE_PLAYER', payload: otherPlayer})
+        dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
         }
-        else if(move === -100){
-          // dispatch(maxScore(currentGameBoard))
-          //maybe dispatch a value here for pmvForMin state
-        } else {
-          //check state here, maybe dispatch a update board? with humo moveo
-          dispatch({type: 'ROBOT_TURN', payload: true})
-          dispatch({type: 'CHANGE_PLAYER', payload: otherPlayer})
-          dispatch({type: 'UPDATE_BOARD', payload: currentGameBoard})
-          dispatch(findAiMove(board))
-          // dispatch(robotGameLoop(move, player, currentGameBoard, gameType))
-          console.log("there is no winner yet, call the bots")
-        }
-      } // closes gameType mvh and hvm "else if"
     } // closes if there is no winner "else"
   }
 }
 
 
 
-export function humanGameLoop(move, player, board, gameType){
+export function humanGameLoop(player, board, gameType){
   return function(dispatch){
 
-    var loc = move
     var currentPlayer = player
     // var gameTypes = gameType
     var Currentboard = board

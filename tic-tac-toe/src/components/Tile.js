@@ -18,8 +18,8 @@ onTileClick(props){
       var player = this.props.player[0]
       if (this.props.robotTurn === false){
         // kick off turn here no matter what
-        let not_valid = this.props.validMove(loc, player, newBoard, gameType)
-          // debugger
+        let not_valid = this.props.validMove(loc, player, newBoard)
+          debugger
           if (typeof not_valid === 'string'){
             // this works in Hvh
             alert(not_valid)
